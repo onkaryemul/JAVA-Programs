@@ -1,0 +1,351 @@
+
+An applet is a program
+that are primarily used in internet computing. They can be transported 
+to the internet from one computer to another computer and run using 
+applet  viewer and any java based platform.
+An applet can do many things for us, can display graphics, play songs,
+accept user inputs, create animations,etx.
+
+An applet developed locally is known as local applet.
+When a web page is trying to locate local applet, it does not need to 
+use internet. Local system does not require internet connection.
+A remote applet is that which is developed by someone else and stored
+on a remote computer and connected to computer.
+We can download remote applet on our computer via internet and run it.
+
+In order to locate and load a remote applet, we must know applet address
+on the way. This address is known as uniform resource locator and must
+be specified as in the applet document as the value of codebase attribute.
+In case of local applet, codebase may be abesent or may specify local
+directory.
+
+Difference between applets and application:
+
+1. Applet do not use main method() for execution of code. Applets when 
+   loaded, automatically calls certain methods of applets class to start
+   and excute applet code.
+
+2. Unlike the standalone application, applets cannot be run independently
+   they are run from a inside a web page, using a special feature known
+   as HTML tag.
+
+3. Applet cannot read from or write to the files in the local computer.
+
+4. Applets cannot communicate with other servers on the network.
+
+5. Appletes cannot run any program from local computer.
+
+6. Applets are restricated from using libraries from other languages such
+   as C or C++.
+
+
+Applets Lifecycle:
+
+Every applet inherits a set of default from the Applet class. As a result,
+when an applet is loaded it undergoes a series of changes in its state.
+The applet states include :
+
+1. Born or initialisation state : 
+   Applet enters the initialized state when
+   it is first loaded. It is achieved by calling init method of applet
+   class. The applet is born. At this stage, we may do following if 
+   required:
+   1. Create object needed by the applet.
+   2. Set up initial values.
+   3. Load images or fonts.
+   4. Set up colors.
+   
+   The initiazation state occurs only once in the applet life cycle.
+   To provide any of the behaviour mentioned above, we must override the 
+   init(). 
+   The general format is:
+   public void init()
+   {
+      -----;
+      -----;
+   }
+
+2. Running state: 
+   The applet enters the running state when the system calls
+   the start method of the applet class. This occurs automatically after
+   the applet is initialized. Starting can also occur if the applet is already in
+   stopped state. The start method may be called once. We may override
+   the start() to create a thread to control its applet. 
+
+3. Ideal or stopped state:
+   An applet becomes ideal when it is stopped from running. Stopping 
+   occurs automatically when we leave the page containing the currently
+   running applet.
+   We can also do so by calling stop method explicitly. If we use a thread
+   to run the applet, then we must use stop() to terminate the thread.
+
+   public void stop(){}
+
+4. Dead state:
+   An applet is said to be dead when it is removed from memory. This occurs
+   automatically by invoking the destroy() when we quit the browser.
+   Like initialisation, destroying stage occurs only once in the applet
+   lifecycle.
+   If the applet has created any resources like threads we may override
+   the destroy() to clean up this resources.
+
+   public void destroy(){}
+
+5. Display state:
+   Applet used to the display state whenever it has to perform output 
+   operations on the screen. This happens immediately after the applet
+   enters into the running state. The paint() is called to accomplish 
+   this task. Almost every applet will have a paint(). The default
+   version of paint() does nothing. Therefore, we must override this method
+   if we want anything to display on the screen.
+
+
+// 1st program
+
+import java.awt.*;
+import java.awt.event.*;
+import java.applet.*;
+
+/*
+  <applet code="app1.class"
+          width=400
+          height=400>
+  </applet>
+*/
+public class app1 extends applet {
+
+   public void paint(Graphics g)
+   {
+      g.drawString("Welcome",100,100);
+   }
+
+}
+
+/*
+  file name: app1.java
+  compilation: javac app1.java
+  execution: appletviewer app1.java
+*/
+
+
+// 2nd program
+
+import java.awt.*;
+import java.awt.event.*;
+import java.applet.*;
+
+/*
+  <applet code="app2.class"
+          width=400
+          height=400>
+  </applet>
+*/
+public class app2 extends applet {
+
+   int x,y;
+
+   public void paint(Graphics g)
+   {
+      g.drawString("Welcome",x,y);
+   }
+
+   public void init()
+   {
+      x = y = 100;
+      addMouseListener(new MouseAdapter(){
+         @override
+         public void mouseClicked(MouseEvent e)
+         {
+            x = e.getX();
+            y = e.getY();
+            repaint();
+         }
+      });
+   }
+}
+
+/*
+  file name: app2.java
+  compilation: javac app2.java
+  execution: appletviewer app2.java
+*/
+
+
+// Program 3
+
+import java.awt.*;
+import java.awt.event.*;
+import java.applet.*;
+
+/*
+  <applet code="app3.class"
+          width=400
+          height=400>
+  </applet>
+*/
+public class app3 extends applet {
+
+   Image img;
+
+   public void init()
+   {
+      img = getImage(getDocumentBase,"Image0.jpg");
+   }
+
+   public void paint(Graphics g)
+   {
+      g.drawImage(img,50,50,250,250,this);
+   }
+   
+}
+
+/*
+  file name: app3.java
+  compilation: javac app3.java
+  execution: appletviewer app3.java
+*/
+
+
+
+// Program 4
+
+import java.awt.*;
+import java.awt.event.*;
+import java.applet.*;
+
+/*
+  <applet code="app4.class"
+          width=400
+          height=400>
+  </applet>
+*/
+public class app4 extends applet {
+
+   Image img;
+   int x,y;
+
+   public void init()
+   {
+      img = getImage(getDocumentBase,"Image0.jpg");
+      addMouseListener(new MouseAdapter(){
+         @override
+         public void mouseClicked(MouseEvent e)
+         {
+            x = e.getX();
+            y = e.getY();
+            repaint();
+         }
+      });
+   }
+
+   public void paint(Graphics g)
+   {
+      g.drawImage(img,x,y,200,200,this);
+   }
+   
+}
+
+/*
+  file name: app4.java
+  compilation: javac app4.java
+  execution: appletviewer app4.java
+*/
+
+
+// Program 5
+
+import java.awt.*;
+import java.awt.event.*;
+import java.applet.*;
+
+/*
+  <applet code="app5.class"
+          width=400
+          height=400>
+  </applet>
+*/
+public class app5 extends applet implements ActionListener {
+
+   Label l1;
+   CheckBox c1,c2,c3,c4;
+   Button b1,b2;
+
+   public void init()
+   {
+      c1 = new CheckBox("A1");
+      c2 = new CheckBox("A2");
+      c3 = new CheckBox("A3");
+      c4 = new CheckBox("A4");
+
+      l1 = new Label("Selected");
+
+      b1 = new Button("Update");
+      b2 = new Button("Diselect");
+
+      b1.addActionListener(this);
+      b2.addActionListener(this);
+
+      add(c1);
+      add(c2);
+      add(c3);
+      add(c4);
+
+      add(l1);
+
+      add(b1);
+      add(b2);
+   }
+
+   @Override
+   public void actionPerformed(ActionEvent e)
+   {
+      Button b = (Button)e.getSource();
+
+      if(b==b2)
+      {
+         c1.setText(false);
+         c2.setText(false);
+         c3.setText(false);
+         c4.setText(false);
+      }
+      else
+      {
+         String str = "Selected\n";
+
+         if(c1.getState())
+         {
+            str = str + c1.getLabel() + "\n";
+         }
+         
+         if(c2.getState())
+         {
+            str = str + c2.getLabel() + "\n";
+         }
+
+         if(c3.getState())
+         {
+            str = str + c3.getLabel() + "\n";
+         }
+
+         if(c4.getState())
+         {
+            str = str + c4.getLabel() + "\n";
+         }
+         
+         l1.setText(str);
+      }
+   }
+
+   public void paint(Graphics g)
+   {
+      g.drawImage(img,x,y,200,200,this);
+   }
+   
+}
+
+/*
+  file name: app5.java
+  compilation: javac app5.java
+  execution: appletviewer app5.java
+*/
+

@@ -1,0 +1,31 @@
+
+1. Create a new package mstock on device d:\java232\mypkg\
+
+2. Define interfaces in mstock
+    i. DataIO  (from mypkg)
+         |
+       NewDataIO (belongs to mstock)
+
+   ii. ObjectAMD
+          add()
+          mod()
+          del()
+          displayAll()
+
+  iii. Transaction
+          addQty()
+          subQty()
+          getBalance()
+
+   iv. Menu
+          menu()
+
+3. Classes
+       Item
+   Interfaces    Serilizable
+                 NewDataIO
+
+4. Class        NewItem
+   Interfaces   ObjectAMD    
+                Transaction
+                Menu 

@@ -1,0 +1,253 @@
+
+Multithreading is a conceptual programming programming paradigm where 
+program or process is divided into two or more sub-programs or processes , 
+which can be implemented at same time in parallel.
+For example, once a program can display an animation on the screen while
+another may build next animation to be displayed.
+This is something similar to dividing tasks into sub-tasks and assigning
+them for different people independently and simultaneously.
+
+   In most of our computer we have only single processor and therefore,
+in reality, the process 
+however, the processor switches between processes so fast that it appears
+to human being that all of them being done simultaneously.
+
+  Java programs that we have seen and discussed so far contain only a
+sequential flow of control, the program begins, run through out a sequence
+of steps and finally ends and at any given point of time , there is only
+one statement under execution.
+
+  A thread is similar to a program that has single flow of control. It has A
+beginning, a body and an end and executes command sequentially. All Multithreading
+programs here developed and execeted can be called single-threaded programs.
+Every program will have atleast one thread called main thread. 
+
+  A unique property of java is its support for multithreading i.e. java
+enables us to use multiple flows of control in developing programs. 
+Each flow of control may be thought of as a separate module known as a 
+thread that runs in parallel to others.
+
+A programs that contains multiple flow of control known as 
+multithreaded program. 
+The main thread is actually main method module which design and tocreate
+other three threads. Once initiated by main thread, the other three thread 
+run concurrently.
+The ability of language to support multithread is referred to as concurrency.
+Since threads in java are subprograms of main application programs and
+share same memory space, they are known as light weight threads.
+
+   The threads running in parallel does not mean that they are actually run at
+the same time. Since all the threads are running on a single processes,
+the flow of execution is shared between threads.
+The java interpreter handles the switching of controls between the threads 
+in such a way that it appears that they are running concurrently.
+
+   Threads are extensively used in  java enabled browsers. These browsers can 
+download a file to the local computers, display a web page on window,
+output another web page on a printer.
+
+   Any application we are working on that requires two or more tricks are to be
+done at that done
+best one for use of .
+
+
+
+Multitasking:
+
+1. It is an os concepts in which multiple tasks are performed simultaneously.
+2. It supports execution of multiple program simultaneously
+3. The processor has to switch etween different processes .
+4, It is less efficient in comparison to multithreading.
+5. A program or the process is the smallest unit in a multitasking environment.
+6. It helps in developing efficient os .
+7. It is expensive in case of context swtiching.
+
+
+
+Multithreading:
+
+1. It is a programming concept in which a program or a process is divided into
+two or more subprograms or threads that are executed at the same time in
+parallel. 
+2. It supports execution of multiple parts of a single program simultaneuosly 
+3. The processor has to switch between different parts of a program .
+4. It is highly efficient.
+5. A thread is the smallest unit in multithreading.
+6. It helps in developing in efficient programs.
+7. It is cost efficient in case of context switching.
+
+
+Creating threads:
+
+Threads creation in java is simple. The threads are implemented in the form of
+objects that can contain a method called run(). The run() is the defined 
+procedure of any thread. It is the only method in which threads behaviour \
+can be implemented.
+
+The general form of the run() is:
+public void run()
+{
+   ----;
+   ----;
+}
+
+The run() should be envoked by an object of concerned thread.This can be
+achieved by creating a thread and initiating it with the help of another
+thread method called start().
+
+A new thread can be created in two ways : 
+1. By creating a thread class : Define a class that extends the extends class and
+   override its run() with the code required by the thread.
+2. By convert a class to a thread : Define a class that implements Runnable interface.
+   The Runnable interface has only one method run() that is to be defined in the 
+   method with the code to be executed by the thread.
+
+
+   What will happen if we call run() of a thread object directly instead of 
+calling the start()?
+   Whenever a run() is invoked by the start(),the thread staarts in a separate
+call stack. However, invoking the run() directly from the main() causes 
+the corresponding thread to go into the current call stack that of main().
+
+
+   Since the direct call to the run() from main() does not create a separate call 
+stack, it's instructions are executed sequentially and not parallelly.
+Thus, calling the run() directly cause the program to behave like normal
+simple threaded program.
+   
+
+   
+
+Life cycle of thread:
+
+   During the life time of a thread , there are many states it can enter.
+1. New Born: When we create a thread object, the thread is born and is 
+   said to be in new born state. The thread is not yet scheduled for
+   running. At this state, we can do only one of the following things with it:
+   1. Schedule it for running using start().
+   2. Kill it using stop().
+      If scheduled, it moves to the runnable state. 
+      If we attempt to use any other method at this stage, an exception will
+      be thrown .
+
+2. Runnable State: The runnable state means that the thread is ready for
+   execution and is waiting for the availability of the processes i.e. 
+   the thread has joined the queue of threads that are waiting for execution.
+   If all threads have equal priority, then they are given time slots for
+   execution in round robin fashion. The thread reliqueshes control join the
+   the queue at the end and again wait for its turn. This process of assingning
+   time to threads is known as time slicing. 
+     However, if we want a thread to relinques control to another thread, to
+   equal before its turn comes, we can do so by using the yield().
+
+3. Running State: Running means that the processor has given its time to the 
+   thread over its execution. The thread runs until it relinqueses control
+   on its own or it is preempted by higher priority thread. A running thread
+   may relinqush its control in one of the following situation:
+   a. It has been suspended using the suspend(). A suspended thread can be
+      revieved by using the resume(). This approach is useful when we 
+      want to suspend a thread for some time due to certain reasons but
+      do not want to kill it.
+   b. It has been made to sleep. We can put a thread to sleep for a specified
+      time period using the method sleep(time). This means that the thread is 
+      out of the queue during this time period. The thread reenters the runnable state
+      as soon as this time period is elapsed.
+   c. It has been told to wait until some event occurs. This is done using
+      wait(). The thread can be resheduled to run again using notify().
+
+4. Blocked state: A thread is said to be blocked when it is prevented from
+   entering into the runnable state and subsequentially the running state.
+   This happens when the thread is suspended, sleeping or waiting in order to 
+   satisfy certain requirements. A blocked thread is considered not 
+   runnable but not dead and therefore fully qualified to run again.
+
+5. Dead state: Every thread has a life cycle. A running thread ends its life
+   when it has completed its run(). It is a natural death. However, we can
+   kill it by sending stop() to it at any state. Thus causing a premature death to it.
+   A thread can be killed as soon as it is born while it is running or when it
+   is not in runnable condition.
+
+   
+
+Synchronization:
+
+   When two or more threads need to access to a shared resource, they needs 
+somewhere to ensure that the resource should be used by only one thread 
+at a time. The process by which this is achieved is called synchronization.
+Java provides a unique language level support for it.
+   The key to synchronization of monitor is the concept of monitor. A monitor
+is an object that is used as a mutually exclusive lock. Only one thread can
+own a monitor at a given time. When a thread acquires a lock, it is said to 
+have entered the monitor. All other threads attempting to enter, the locked
+monitor will be suspended until the first thread exists the monitor. 
+These other threads are said to be waiting for the monitor. The thread that
+owns a monitor can reenter the same monitor if it so desires. The language
+such as C and C++ do not support synchronization, whereas java implements
+synchronization through language element. We can also synchronization our
+code in either of two ways, both involve the use of synchronized keyword.
+
+1. Using synchronized method:
+   Synchronization is easy in java because all objects have their own 
+implicit monitor associate with them. To enter an object monitor, just that
+has been modified with the synchronized keyword. While a thread is inside 
+a synchronized method, all other threads that try to call it on the same
+instance have to wait.
+To exit the monitor an enliqueses the control of the object, the owner
+of the monitor simply returns from the synchronized method.
+
+
+2. Synchronized statement:
+   Imagine that want to  synchronize excess to objects of a class that ways
+decided for multithreaded access,i.e. class does not use synchronized methods
+further the class does not created by us, but by thiry persons/ party and
+do not have access to the code thus we do not have synchronization to the
+appropriate method within the class. The solution is , simply put calls
+to the method defined by this class inside a synchronized block. 
+Following is the general format for the synchronizated statement:
+ 
+ synchronized(Object)
+ {
+   ----
+    call to method
+    ----
+ }
+
+Here, object is reference to the object being synchronized block ensures that
+a call to the method i.e. a member of an object occurs only after current
+thread has successfully entered objects monitor.
+
+
+
+
+
+Interthread Communication:
+
+In the previous program unconditionally blocked other threads from 
+asynchronious access to certain methods. This use of the implicit 
+monitor in java objects is powerful but we can achieve more subtel level
+of control to interprocess communication. 
+    Multithreading replaces event look programming by diving task into discrete
+logical units. Threads also provides secondary memory they do away with cooling.
+Cooling is usally implemented to check some condition .
+Once the condition is true appropriate action is taken. This wastes CPU
+time. For example, consider the classifying problems where one thread is
+producing some data and another is consuming it. To make the problem more
+interesting, suppose that the producers has to wait untill the consumer is
+finished before it generates more data. 
+   In cooling mechanisms, the consumer may wait for many CPU cycles while 
+it waits for producer to produce. Once the producer was finished, it will
+start cooling, wasting more CPU cycles waiting for the consumer to finish and
+so far. To avoid cooling, java includes an elegant interprocess communication
+via the 'wait' 'notify' method and 'notifyAll' methods. This methods are
+implemented as final methods in the class object. So all classes have them.
+All three methods can be called only from within a synchronized context.
+
+The rules for using these methods are actually quite simple:
+1. Wait methods tells the calling thread to give up the monitor and go to sleep until
+   some other thread enters the same monitor and cause notify method.
+2. Nofify method wakes up a thread that called on the same object.
+3. NotifyAll method wakes up all threads that called wait on the same object.
+   One of the thread will be granted access to  
+
+
+
